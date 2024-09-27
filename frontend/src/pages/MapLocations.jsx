@@ -1,32 +1,25 @@
-
 import BookTickets from "./BookTickets";
 import Desp from "./Desp";
 import Header from "./Header";
 
-//import Button from 'react-bootstrap/Button';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
-  ButtonGroup,
   Flex,
   HStack,
   IconButton,
   Input,
   SkeletonText,
   Text,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import {
   useJsApiLoader,
   GoogleMap,
-  Marker,
-  Autocomplete,
-  DirectionsRenderer,
   MarkerF
-} from '@react-google-maps/api'
-import { useRef, useState } from 'react'
-const center = { lat: 48.8584, lng: 2.2945 }
+} from '@react-google-maps/api';
+import { useRef, useState, useEffect } from 'react';
+
 const markers = [
   {
     id: 1,
@@ -54,98 +47,62 @@ const markers = [
     position: { lat: 15.4047, lng: 74.0150 },
   }
 ];
+
 function MapLocations() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyAC_hK0PSk7fUcavQM8vck5Dy_zmXZvTsQ',
     libraries: ['places'],
-  })
-  
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+  });
 
-  
-  /** @type React.MutableRefObject<HTMLInputElement> */
-  const originRef = useRef()
-  /** @type React.MutableRefObject<HTMLInputElement> */
-  const destiantionRef = useRef()
+  const [map, setMap] = useState(null);
+  const [bounds, setBounds] = useState(null);
+
+  useEffect(() => {
+    if (isLoaded) {
+      const newBounds = new window.google.maps.LatLngBounds();
+      markers.forEach(marker => newBounds.extend(marker.position));
+      setBounds(newBounds);
+    }
+  }, [isLoaded]);
 
   if (!isLoaded) {
-    return <div>Laoding...</div>
+    return <div>Loading...</div>;
   }
 
-  function findCenterLatLng(markers) {
-    let totalLat = 0;
-    let totalLng = 0;
-    let totalMarkers = markers.length;
-
-    markers.forEach(marker => {
-        totalLat += marker.position.lat;
-        totalLng += marker.position.lng;
-    });
-
-    let centerLat = totalLat / totalMarkers;
-    let centerLng = totalLng / totalMarkers;
-
-    return { lat: centerLat, lng: centerLng };
-}
-
-
- 
-
-
-  
   return (
-    <div >
-    
-<h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white" ><a onClick={()=>{navigate('/search')}}> {"<"}    </a >Map</h1>
-<Box height={'90vh' } width={'100vw'}>
-  <Box  left={0} top={0} h='100%' w='100%'>
-        {/* Google Map Box */}
-        <GoogleMap
-          center={findCenterLatLng(markers)}
-          zoom={15}
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          options={{
-            zoomControl: false,
-            streetViewControl: false,
-            mapTypeControl: false,
-            fullscreenControl: false,
-          }}
-          onLoad={map => setMap(map)}
-        >
-          {/* <Marker position={center} />
-          {directionsResponse && (
-            <DirectionsRenderer directions={directionsResponse} />
-          )} */}
-
-           {markers.map(({ id, name, position }) => (
-                <MarkerF
-                  key={id}
-                  position={position}
-                  onClick={() => handleActiveMarker(id,position)}
-                  // icon={{
-                  //   url:"https://t4.ftcdn.net/jpg/02/85/33/21/360_F_285332150_qyJdRevcRDaqVluZrUp8ee4H2KezU9CA.jpg",
-                  //   scaledSize: { width: 50, height: 50 }
-                  // }}
-                >
-                 {/* {activeMarker === id ? (
-                    <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                      <div>
-                        <p>{name}</p>
-                      </div>
-                    </InfoWindowF>
-                  ) : null} */}
-                </MarkerF>
-              ))}
-        </GoogleMap>
+    <div>
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        <a onClick={() => { navigate('/search') }}> {"<"} </a>Map
+      </h1>
+      <Box height={'90vh'} width={'100vw'}>
+        <Box left={0} top={0} h='100%' w='100%'>
+          {/* Google Map Box */}
+          <GoogleMap
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            onLoad={map => setMap(map)}
+            options={{
+              zoomControl: false,
+              streetViewControl: false,
+              mapTypeControl: false,
+              fullscreenControl: false,
+            }}
+            // Set the bounds for the map when it loads
+            onBoundsChanged={() => {
+              if (bounds && map) {
+                map.fitBounds(bounds);
+              }
+            }}
+          >
+            {markers.map(({ id, position }) => (
+              <MarkerF
+                key={id}
+                position={position}
+              />
+            ))}
+          </GoogleMap>
         </Box>
-
-</Box>
-
-   
-
-
-   
+      </Box>
     </div>
   );
 }
