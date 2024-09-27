@@ -1,31 +1,20 @@
-import BookTickets from "./BookTickets";
-import Desp from "./Desp";
-import Header from "./Header";
-
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  IconButton,
-  Input,
-  SkeletonText,
-  Text,
-} from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import {
   useJsApiLoader,
   GoogleMap,
-  MarkerF
+  MarkerF,
+  InfoWindowF,
 } from '@react-google-maps/api';
-import { useRef, useState, useEffect } from 'react';
 
+// Define the markers
 const markers = [
   {
     id: 1,
     name: "Panaji",
     position: { lat: 15.4909, lng: 73.8278 },
-  }, 
+  },
   {
     id: 2,
     name: "Margao",
@@ -55,16 +44,7 @@ function MapLocations() {
     libraries: ['places'],
   });
 
-  const [map, setMap] = useState(null);
-  const [bounds, setBounds] = useState(null);
-
-  useEffect(() => {
-    if (isLoaded) {
-      const newBounds = new window.google.maps.LatLngBounds();
-      markers.forEach(marker => newBounds.extend(marker.position));
-      setBounds(newBounds);
-    }
-  }, [isLoaded]);
+  const [activeMarker, setActiveMarker] = useState(null); // State to track the active marker
 
   if (!isLoaded) {
     return <div>Loading...</div>;
@@ -77,29 +57,35 @@ function MapLocations() {
       </h1>
       <Box height={'90vh'} width={'100vw'}>
         <Box left={0} top={0} h='100%' w='100%'>
-          {/* Google Map Box */}
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
-            onLoad={map => setMap(map)}
+            center={{ lat: 15.4909, lng: 73.8278 }} // Center of the map
+            zoom={10} // Set the initial zoom level
             options={{
-              zoomControl: false,
+              zoomControl: true,
               streetViewControl: false,
               mapTypeControl: false,
               fullscreenControl: false,
             }}
-            // Set the bounds for the map when it loads
-            onBoundsChanged={() => {
-              if (bounds && map) {
-                map.fitBounds(bounds);
-              }
-            }}
           >
-            {markers.map(({ id, position }) => (
+            {markers.map(({ id, position, name }) => (
               <MarkerF
                 key={id}
                 position={position}
+                onClick={() => setActiveMarker(id)} // Set the active marker on click
               />
             ))}
+
+            {activeMarker && (
+              <InfoWindowF 
+                position={markers.find(marker => marker.id === activeMarker).position}
+                onCloseClick={() => setActiveMarker(null)}
+              >
+                <div>
+                  <h3>{markers.find(marker => marker.id === activeMarker).name}</h3> {/* Display the name here */}
+                </div>
+              </InfoWindowF>
+            )}
           </GoogleMap>
         </Box>
       </Box>
