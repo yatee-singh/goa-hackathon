@@ -74,55 +74,91 @@ function Search  ()  {
     return <div>Loading..</div>
   }
 
-  const markers = [
-  {
-    id: 1,
-    name: "Panaji",
-    position: { lat: 15.4909, lng: 73.8278 },
-  }, 
-  {
-    id: 2,
-    name: "Margao",
-    position: { lat: 15.2993, lng: 73.9570 },
-  },
-  {
-    id: 3,
-    name: "Vasco da Gama",
-    position: { lat: 15.3860, lng: 73.8443 },
-  },
-  {
-    id: 4,
-    name: "Mapusa",
-    position: { lat: 15.5912, lng: 73.8087 },
-  },
-  {
-    id: 5,
-    name: "Ponda",
-    position: { lat: 15.4047, lng: 74.0150 },
-  }
-];
-
+ 
 
 // const calculateDistance = (latLngA, latLngB) => {
 //   return google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
 // };
+const calculateDistance = (latLngA, latLngB) => {
+  return google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
+};
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const originPlace = originRef.current.value;
 
-    if (originPlace === '') {
-      alert('Please enter a location');
-      return;
+  async function calculateRoute() {
+
+    console.log(start,stop)
+    if ((originRef.current.value === '' && current==='') || (destiantionRef.current.value === '' && stop==='')) {
+      return
     }
 
-    console.log(originPlace)
-
-    const geocoder = new google.maps.Geocoder();
-
-    // Geocode the input location from the Autocomplete input
+    if( start=='')
+    {
+      console.log(start,location,stop)
+      setstop(destiantionRef.current.value)
+      const directionsService = new google.maps.DirectionsService()
+    const results = await directionsService.route({
+      origin: location,
+      destination: destiantionRef.current.value,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    })
+    setDirectionsResponse(results)
+    setDistance(results.routes[0].legs[0].distance.text)
+    setDuration(results.routes[0].legs[0].duration.text)
     
-  };
+    return;
+    }
+    setstart(originRef.current.value)
+    setstop(destiantionRef.current.value)
+    console.log(start,stop)
+    // eslint-disable-next-line no-undef
+    const directionsService = new google.maps.DirectionsService()
+    const results = await directionsService.route({
+      origin: start,
+      destination:stop,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    })
+    setDirectionsResponse(results)
+    setDistance(results.routes[0].legs[0].distance.text)
+    setDuration(results.routes[0].legs[0].duration.text)
+    
+  }
+
+
+ const  handleSearch =async (event) => {
+  event.preventDefault()
+  const originPlace = originRef.current.value;
+
+  if (originPlace === '') {
+    alert('Please enter a location');
+    return;
+  }
+  const distances=[]
+const directionsService = new google.maps.DirectionsService()
+  data.map(async function(location, index) {
+      console.log(location.Latitude,location.Longitude)
+      const results = await directionsService.route({
+      origin: originRef.current.value,
+      destination: {lat:location.Latitude,lng:location.Longitude},
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+    });
+     distances.append([...location,results.routes[0].legs[0].distance.text])
+  }
+
+   
+
+  )
+
+  console.log(distances)
+
+  
+    
+    
+
+ 
+};
 
   return (
     <div>
@@ -143,8 +179,9 @@ function Search  ()  {
        <Autocomplete>
         <input ref={originRef} type="search" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
     </Autocomplete>
+    <button onClick={handleSearch} class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
     
-        <button onClick={handleSearch} class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        {/* <button onClick={handleSearch} class="text-white absolute end-23 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
 
         
     </div>

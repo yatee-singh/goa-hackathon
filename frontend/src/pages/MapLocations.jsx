@@ -54,7 +54,7 @@ function MapLocations(props) {
     <div>
      
       <Box height={'100vh'} width={'100vw'}>
-        <Box left={0} top={0} h='100%' w='100%'>
+        <Box  h='100%' w='100%'>
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={{ lat: 15.4909, lng: 73.8278 }} // Center of the map
