@@ -104,9 +104,9 @@ function findCenterLatLng(markers) {
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef()
 
-  // if (!isLoaded) {
-  // //   return <SkeletonText />
-  // // }
+  if (!isLoaded) {
+    return <SkeletonText />
+  }
 
 //   const calculateDistance()=>{
 //     marker_with_distance=[]

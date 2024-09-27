@@ -4,8 +4,14 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Booking from './pages/Booking'
 import List from './pages/List' 
 import Main from './pages/Main'
+import User from './pages/user1'
+import Search from './pages/Search'
+import MapLocations from './pages/MapLocations'
+import Analytics from './pages/Analytics'
 
+import Roote from './pages/Roote'
 
+import Graph from './pages/Graph'
 
 
 
@@ -15,6 +21,7 @@ export default function App() {
 
   return (
     <>
+     <React.StrictMode>
           <BrowserRouter>
 
             <Routes>
@@ -22,6 +29,13 @@ export default function App() {
               <Route path='/' element={<Main/>}/>
               <Route path='/booking' element={<Booking/>}/>
               <Route path='/list' element={<List/>}/>
+               <Route path='/user' element={<User/>}/>
+                <Route path='/analytics' element={<Analytics/>}/>
+                 <Route path='search' element={<Search/>}/>
+                  <Route path='mapLocations' element={<MapLocations/>}/>
+
+                   <Route path='route' element={<Roote/>}/>
+                  <Route path='/graph' element={<Graph/>}/>
               {/* <Route path='/admin' element={<AdminLaouts/>}>
               <Route index element={<Admin/>}/>
 
@@ -33,9 +47,11 @@ export default function App() {
               </Route> */}
             </Routes>
           </BrowserRouter>
-
+</React.StrictMode>
 
 
     </>
   )
 }
+
+
