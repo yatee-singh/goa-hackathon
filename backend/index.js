@@ -7,13 +7,16 @@ import {JSDOM} from "jsdom"
 import mongoose from "mongoose"; // For Mongoose
 import { MongoClient } from "mongodb"; // For MongoClient from the native MongoDB driver
 import dotenv from "dotenv";
+import cors from 'cors'
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
 const app = express();
 const port = 3000;
 
+app.use(cors(
 
+))
 
 dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));

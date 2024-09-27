@@ -20,21 +20,55 @@ import {
   Autocomplete,
   DirectionsRenderer,
 } from '@react-google-maps/api'
-import { useRef, useState } from 'react'
+import { useRef, useState,useEffect } from 'react'
+import MapLocations from './MapLocations';
 function Search  ()  {
+      const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyAC_hK0PSk7fUcavQM8vck5Dy_zmXZvTsQ',
     libraries: ['places'],
   })
-
-    const navigate = useNavigate();
-
-   
-  const [sortedMarkers, setSortedMarkers] = useState([]); // Store sorted markers
-   /** @type React.MutableRefObject<HTMLInputElement> */
+   useEffect(() => {
+    // Fetch data from the endpoint
+    fetch('http://localhost:3000/data')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+      console.log(data)
+  }, []); // Empty dependency array ensures this runs only once after the component mounts
+  /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef()
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef()
+
+  const [viewMap,setViewMap]=useState(false);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [sortedMarkers, setSortedMarkers] = useState([]); // Store sorted markers
+
+ 
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+ 
 
   if (!isLoaded) {
     return <div>Loading..</div>
@@ -73,7 +107,8 @@ function Search  ()  {
 //   return google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
 // };
 
-  const handleSearch = () => {
+  const handleSearch = (event) => {
+    event.preventDefault();
     const originPlace = originRef.current.value;
 
     if (originPlace === '') {
@@ -108,15 +143,15 @@ function Search  ()  {
        <Autocomplete>
         <input ref={originRef} type="search" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
     </Autocomplete>
+    
         <button onClick={handleSearch} class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
 
         
     </div>
 </form>
-<a onClick={()=>{navigate('/mapLocations')}}>View In Map</a>
+<a onClick={()=>{setViewMap(!viewMap)}}>View In Map</a>
 
-
-
+{viewMap?
 <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -134,13 +169,13 @@ function Search  ()  {
             </tr>
         </thead>
         <tbody>
-             {markers.map((location, index) => (
+             {data.map((location, index) => (
                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {location.name}
+                  {location.Address}
                 </th>
                 <td class="px-6 py-4">
-                    {index}
+                    {location.Cars}
                 </td>
                 <td class="px-6 py-4">
                     <Button onClick={()=>{navigate('/route')}}/>
@@ -154,7 +189,9 @@ function Search  ()  {
            
         </tbody>
     </table>
-</div>
+</div>:<MapLocations data={data}/>}
+
+
 
 
 

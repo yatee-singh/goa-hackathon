@@ -37,7 +37,7 @@ const markers = [
   }
 ];
 
-function MapLocations() {
+function MapLocations(props) {
   const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyAC_hK0PSk7fUcavQM8vck5Dy_zmXZvTsQ',
@@ -52,10 +52,8 @@ function MapLocations() {
 
   return (
     <div>
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-        <a onClick={() => { navigate('/search') }}> {"<"} </a>Map
-      </h1>
-      <Box height={'90vh'} width={'100vw'}>
+     
+      <Box height={'100vh'} width={'100vw'}>
         <Box left={0} top={0} h='100%' w='100%'>
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -68,17 +66,17 @@ function MapLocations() {
               fullscreenControl: false,
             }}
           >
-            {markers.map(({ id, position, name }) => (
+            {props.data.map((loc) => (
               <MarkerF
-                key={id}
-                position={position}
+                key={loc._id}
+                position={{lat:loc.Latitude,lng:loc.Longitude}}
                 onClick={() => setActiveMarker(id)} // Set the active marker on click
               />
             ))}
 
             {activeMarker && (
               <InfoWindowF 
-                position={markers.find(marker => marker.id === activeMarker).position}
+                position={markers.find(marker => marker._id === activeMarker).position}
                 onCloseClick={() => setActiveMarker(null)}
               >
                 <div>
