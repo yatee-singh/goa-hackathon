@@ -14,8 +14,8 @@ import Avail from './pages/Avail'
 import Graph from './pages/Graph'
 import Tab from './pages/table'
 import Header from './Normal'
-
-
+import Pol from './pages/Pol'
+import { ChakraProvider } from '@chakra-ui/react'
 export default function App() {
  
 
@@ -26,6 +26,7 @@ export default function App() {
    
 
           <BrowserRouter>
+          <ChakraProvider>
 
             <Routes>
               
@@ -42,9 +43,9 @@ export default function App() {
                     <Route path='/pay' element={<Pay/>}/>
                     <Route path='/avail' element={<Avail/>}/>
                       <Route path='/tab' element={<Tab/>}/>
-             
+                   <Route path='/pol' element={<Pol/>}/>
             </Routes>
-            
+            </ChakraProvider>
           </BrowserRouter>
 
 
