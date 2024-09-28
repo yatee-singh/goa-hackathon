@@ -176,9 +176,12 @@ function  Roote (props) {
 
   return (
     <div>
-      <a onClick={props.changeView}>Go Back</a>
-    
-      <Box height={'100%'} width={'100%'}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '15px' }}>
+        <a onClick={props.changeView} style={{ textAlign: 'left' }}>Go Back</a>
+        <a onClick={startNav} style={{ textAlign: 'right' }}>Navigation</a>
+      </div>
+
+      <Box height={'100vh'} width={'100vw'}>
         <Box  h='100%' w='100%'>
           <GoogleMap
          center={{ lat: 15.5527, lng: 73.7490 }}
@@ -193,7 +196,7 @@ function  Roote (props) {
           onLoad={map => setMap(map)}
         >
           <Button  onClick= {displayRazorpay}> Pay</Button>
-      <Button onClick={startNav}>start navigation</Button>
+      {/* <Button onClick={startNav}>start navigation</Button> */}
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
