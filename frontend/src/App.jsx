@@ -12,7 +12,7 @@ import Pay from './pages/Pay'
 import Roote from './pages/Roote'
 import Avail from './pages/Avail'
 import Graph from './pages/Graph'
-
+import Tab from './pages/table'
 import Header from './Normal'
 
 
@@ -41,6 +41,7 @@ export default function App() {
                   <Route path='/graph' element={<Graph/>}/>
                     <Route path='/pay' element={<Pay/>}/>
                     <Route path='/avail' element={<Avail/>}/>
+                      <Route path='/tab' element={<Tab/>}/>
              
             </Routes>
             

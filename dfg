@@ -1,0 +1,143 @@
+[33mcommit 16a501a22254c9c3562da67f6602c30bc4fb752a[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Merge: fff55ad 51d2ed6
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 15:28:52 2024 +0530
+
+    Merge branch 'main' of https://github.com/yatee-singh/goa-hackathon
+
+[33mcommit fff55ad7566465f0950e4a1f8a6459fd8b8231e6[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 15:28:47 2024 +0530
+
+    added nav to google maps
+
+[33mcommit 51d2ed6279aafea1c3566432777c8f7db38f7b0f[m
+Author: sharwin neema <you@example.com>
+Date:   Sat Sep 28 15:20:09 2024 +0530
+
+    added razorpay
+
+[33mcommit 498827c34729a2878ee069720f15d9a07d654c65[m
+Merge: 9acf7b8 5fb3c4d
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 14:54:13 2024 +0530
+
+    Merge branch 'main' of https://github.com/yatee-singh/goa-hackathon
+
+[33mcommit 9acf7b8040031beca8fc735bffd906d0eb5d51e4[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 14:53:52 2024 +0530
+
+    pay and navigation button added
+
+[33mcommit 5fb3c4dc11f39de11804f84d8679ed91600f694e[m
+Author: sharwin neema <you@example.com>
+Date:   Sat Sep 28 14:47:43 2024 +0530
+
+    added payment routes
+
+[33mcommit 20b0c5572d853090bde6d7a3001bfaf0a7f1195c[m
+Merge: 7a804ca 7236e33
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 13:59:45 2024 +0530
+
+    Merge branch 'main' of https://github.com/yatee-singh/goa-hackathon
+
+[33mcommit 7236e33cc52ac618d3dcea33b0d4975b5e03fd89[m
+Author: shaun-shock <f20212607@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 13:17:31 2024 +0530
+
+    added analytics data
+
+[33mcommit 7a804ca93ec0e3769aa463b51a028fe65209434b[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 12:08:52 2024 +0530
+
+    routes working
+
+[33mcommit e0c0b32b79dd71b016b8b630fca84d944b9afbb0[m
+Merge: 65cfcd2 78526e6
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 02:47:45 2024 +0530
+
+    Merge branch 'main' of https://github.com/yatee-singh/goa-hackathon
+
+[33mcommit 65cfcd28787362533da047f92d3b00d7064537c6[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 02:47:38 2024 +0530
+
+    search button in search not workng
+
+[33mcommit 78526e6357266679ab7218504f48d45538297f3f[m
+Author: sharwin neema <you@example.com>
+Date:   Sat Sep 28 02:40:20 2024 +0530
+
+    mobile friendly
+
+[33mcommit 22891c34437f5b93622a6bb3bedf4d9f4ecc24f1[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 02:04:14 2024 +0530
+
+    table and map working with databse data
+
+[33mcommit 72490cb22a3330b8a91577495ec900f5557d483c[m
+Merge: 5de758b cd3d5be
+Author: shaun-shock <f20212607@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 00:50:53 2024 +0530
+
+    Merge branch 'main' of https://github.com/yatee-singh/goa-hackathon
+
+[33mcommit 5de758b27d1664e4025290f5d90670878f5540de[m
+Author: shaun-shock <f20212607@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 00:49:21 2024 +0530
+
+    backend
+
+[33mcommit cd3d5bedd7daac54a7b724326f29187da588fd77[m
+Merge: 34a3893 833a91b
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 00:49:16 2024 +0530
+
+    Merge branch 'main' of https://github.com/yatee-singh/goa-hackathon
+
+[33mcommit 34a38932cea64c4ebc78e69bdf34eb2f9a5e062b[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Sat Sep 28 00:44:47 2024 +0530
+
+    working search and map marking
+
+[33mcommit 833a91b693fbbf9604149b7d7ec458103ea15369[m
+Author: sharwin neema <you@example.com>
+Date:   Sat Sep 28 00:41:31 2024 +0530
+
+    added graph
+
+[33mcommit 787c7ef470200a7be03e64fb3cbb4a4d77a045b0[m
+Author: sharwin neema <you@example.com>
+Date:   Sat Sep 28 00:03:17 2024 +0530
+
+    add bounds
+
+[33mcommit 86eac49be681a6ba3785552963e93fcd2be60029[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Fri Sep 27 23:50:59 2024 +0530
+
+    aded mapping locations
+
+[33mcommit 09f56a1a60f7b87a6083d9d7e2505f8070fb6e0e[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Fri Sep 27 23:28:40 2024 +0530
+
+    search autocorrect working
+
+[33mcommit f5c8198793a920abe51d424d61e7940f619ef0c6[m
+Author: yatee-singh <f20212534@goa.bits-pilani.ac.in>
+Date:   Fri Sep 27 21:34:00 2024 +0530
+
+    added frontend basic
+
+[33mcommit fac5c54f566e13c8d1aa9496f27c0dc40d901a1b[m
+Author: yatee-singh <101913573+yatee-singh@users.noreply.github.com>
+Date:   Fri Sep 27 20:25:22 2024 +0530
+
+    Initial commit
