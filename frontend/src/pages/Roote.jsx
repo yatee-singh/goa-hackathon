@@ -150,7 +150,7 @@ function  Roote (props) {
             razorpaySignature: response.razorpay_signature,
           };
           
-          const result = await axios.post('/payment/success', data);
+          const result = await axios.post('http://localhost:3000/payment/success', data);
           alert(result.data.msg);
         },
         prefill: {
