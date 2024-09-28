@@ -255,6 +255,71 @@ app.post('/location', async (req, res) => { //In a particular location, the perc
           res.status(500).json({ message: 'Internal server error' });
         }
       });
+
+      app.post('/update', async (req, res) => {
+        const { locationId, timeStamp, entered } = req.body;
+      
+        if (!locationId || !timeStamp || entered === undefined) {
+          return res.status(400).json({ message: 'Location ID, TimeStamp, and Entered status are required.' });
+        }
+      
+        // Parse the timestamp to extract the day of the week
+        const date = new Date(timeStamp);
+        const dayOfWeek = date.toLocaleString('en-us', { weekday: 'long' }); // Extracts day name
+        const currentYear = date.getFullYear();
+        const currentWeekNumber = Math.ceil((date.getDate() - 1) / 7); // Simple week calculation for demo purposes
+      
+        // Mapping days of the week to the appropriate database fields
+        const dayMapping = {
+          "Monday": "Mon",
+          "Tuesday": "Tue",
+          "Wednesday": "Wed",
+          "Thursday": "Thu",
+          "Friday": "Fri",
+          "Saturday": "Sat",
+          "Sunday": "Sun"
+        };
+      
+        // Handle errors for unsupported days
+        if (!dayMapping[dayOfWeek]) {
+          return res.status(400).json({ message: 'Invalid day provided.' });
+        }
+      
+        try {
+          const database = client.db('test'); // Replace with your actual DB name
+          const parkingCollection = database.collection('parkingData');
+          const legacyCollection = database.collection('legacyTable');
+      
+          // 1. Update "Available Spaces" in `parkingData`
+          const spaceUpdate = entered ? -1 : 1; // -1 for entry, +1 for exit
+      
+          const parkingUpdateResult = await parkingCollection.updateOne(
+            { _id: locationId },
+            { $inc: { availableSpaces: spaceUpdate } } // Increment or decrement based on 'entered'
+          );
+      
+          if (parkingUpdateResult.matchedCount === 0) {
+            return res.status(404).json({ message: 'Location not found in parkingData.' });
+          }
+      
+          // 2. Update the respective day in `legacyTable`
+          const legacyUpdateResult = await legacyCollection.updateOne(
+            { _id: locationId, week: currentWeekNumber, year: currentYear }, // Update based on current week and year
+            { $inc: { [dayMapping[dayOfWeek]]: 1 } }, // Increment the day's count
+            { upsert: true } // Create a new row for a new week if not existing
+          );
+      
+          if (!legacyUpdateResult) {
+            return res.status(500).json({ message: 'Error updating legacyTable.' });
+          }
+      
+          res.status(200).json({ message: 'Data successfully updated.' });
+      
+        } catch (error) {
+          console.error('Error updating data:', error);
+          res.status(500).json({ message: 'Internal server error.' });
+        }
+      });
       
   
   
