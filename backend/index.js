@@ -294,20 +294,25 @@ app.post('/location', async (req, res) => { //In a particular location, the perc
           const spaceUpdate = entered ? -1 : 1; // -1 for entry, +1 for exit
       
           const parkingUpdateResult = await parkingCollection.updateOne(
-            { _id: locationId },
+            { Address: locationId },
             { $inc: { availableSpaces: spaceUpdate } } // Increment or decrement based on 'entered'
           );
       
           if (parkingUpdateResult.matchedCount === 0) {
             return res.status(404).json({ message: 'Location not found in parkingData.' });
           }
+
+          const parkingData = await parkingCollection.findOne({ Address: locationId });
+          const loc_id = parkingData.Locality;
       
           // 2. Update the respective day in `legacyTable`
           const legacyUpdateResult = await legacyCollection.updateOne(
-            { _id: locationId, week: currentWeekNumber, year: currentYear }, // Update based on current week and year
+            { loc_id: locationId, week: currentWeekNumber, year: currentYear }, // Update based on current week and year
             { $inc: { [dayMapping[dayOfWeek]]: 1 } }, // Increment the day's count
             { upsert: true } // Create a new row for a new week if not existing
           );
+
+          
       
           if (!legacyUpdateResult) {
             return res.status(500).json({ message: 'Error updating legacyTable.' });
