@@ -8,7 +8,7 @@ import User from './pages/user1'
 import Search from './pages/Search'
 import MapLocations from './pages/MapLocations'
 import Analytics from './pages/Analytics'
-
+import Pay from './pages/Pay'
 import Roote from './pages/Roote'
 
 import Graph from './pages/Graph'
@@ -36,6 +36,7 @@ export default function App() {
 
                    <Route path='route' element={<Roote/>}/>
                   <Route path='/graph' element={<Graph/>}/>
+                    <Route path='/pay' element={<Pay/>}/>
               {/* <Route path='/admin' element={<AdminLaouts/>}>
               <Route index element={<Admin/>}/>
 

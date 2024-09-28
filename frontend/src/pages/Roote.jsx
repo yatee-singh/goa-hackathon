@@ -1,6 +1,6 @@
 import React, { useState ,forwardRef, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import {
   useJsApiLoader,
   GoogleMap,
@@ -62,7 +62,10 @@ function  Roote (props) {
   if (!isLoaded) {
     return <div>Loading...</div>;
   }
-
+  function startNav(){
+     window.open('https://www.google.co.in/maps/dir/BITS+Pilani+K+K+Birla+Goa+Campus,+Road,+Zuarinagar,+Sancoale,+Goa/Ponda,+Goa/@15.3943121,73.85997', '_blank');
+  
+  }
 
   async function calculateRoute() {
     if (props.start=== '' || props.stop === '') {
@@ -93,7 +96,7 @@ function  Roote (props) {
   return (
     <div>
       <a onClick={props.changeView}>Go Back</a>
-     
+    
       <Box height={'100vh'} width={'100vw'}>
         <Box  h='100%' w='100%'>
           <GoogleMap
@@ -108,7 +111,8 @@ function  Roote (props) {
           }}
           onLoad={map => setMap(map)}
         >
-         
+          <Button  onClick={() => { navigate('/pay'); }}> Pay</Button>
+      <Button onClick={startNav}>start navigation</Button>
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
