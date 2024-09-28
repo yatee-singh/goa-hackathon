@@ -114,19 +114,21 @@ function Header() {
 
 
 
-<Breadcrumb height={'20vh'}>
-  <BreadcrumbItem fontSize={'1.5rem'}>
-    <BreadcrumbLink  href='/'>Home</BreadcrumbLink>
+<Breadcrumb >
+  <BreadcrumbItem >
+    <BreadcrumbLink color={'blue'}  href='/'>Home</BreadcrumbLink>
   </BreadcrumbItem>
 
-  <BreadcrumbItem  fontSize={'1.5rem'}>
+  <BreadcrumbItem  >
     <BreadcrumbLink href='/user'>User</BreadcrumbLink>
   </BreadcrumbItem>
 
-  <BreadcrumbItem  fontSize={'1.5rem'}>
+  <BreadcrumbItem  >
     <BreadcrumbLink href='/analytics'>Analytics</BreadcrumbLink>
   </BreadcrumbItem>
 </Breadcrumb>
+
+
 
 
     </header>
