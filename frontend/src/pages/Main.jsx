@@ -15,10 +15,10 @@ function Main() {
     <div className="px-4 py-6 md:px-8 md:py-12 height:100vh">
       <Header/>
       <h1 className="mb-4 mt-56 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
-        Get back to growth with <span className="text-blue-600 dark:text-blue-500">the world's #1</span> CRM.
+        Park<span className="text-blue-600 dark:text-blue-500">Ease</span>
       </h1>
       <p className="text-base font-normal text-gray-500 lg:text-lg dark:text-gray-400">
-        Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+      Finding parking in Goa has never been easier! ParkEase brings real-time information on available parking spaces across the region. 
       </p>
 
       {/* Button group with responsive layout */}

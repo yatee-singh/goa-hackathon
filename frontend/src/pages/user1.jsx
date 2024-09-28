@@ -12,7 +12,7 @@ function User() {
         User
       </h1>
       <p className="text-base md:text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 text-center">
-        Here at Flowbite, we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+      Easily find your next parking spot with <span className="text-blue-600 dark:text-blue-500">Search Parking Space</span> and get real-time updates on <span className="text-blue-600 dark:text-blue-500">Availability </span>at your fingertips. Stay informed and navigate effortlessly, making every moment in Goa enjoyable!
       </p>
 
       <div className="inline-flex rounded-md shadow-sm flex flex-col md:flex-row justify-center mt-6" role="group">

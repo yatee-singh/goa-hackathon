@@ -45,3 +45,30 @@
 .read-the-docs {
   color: #888;
 }
+
+.relative {
+  max-width: 100%;
+}
+
+.bg-white {
+  transition: background-color 0.3s;
+}
+
+.bg-white:hover {
+  background-color: #f1f1f1; /* Add hover effect */
+}
+
+.border-b {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.whitespace-normal {
+  white-space: normal; /* Allow text to wrap */
+}
+
+/* Optional: Adjust the max width to fit the design */
+.flex-1 {
+  flex-basis: 0; /* Ensure equal distribution of available space */
+  flex-grow: 1; /* Allow it to grow */
+}
+
