@@ -325,6 +325,48 @@ app.post('/location', async (req, res) => { //In a particular location, the perc
           res.status(500).json({ message: 'Internal server error.' });
         }
       });
+
+      app.get('/suggest', async (req, res) => {
+        try {
+          const database = client.db('test'); // Replace with your actual database name
+          const collection = database.collection('analyticsData'); // Replace with your actual collection name
+      
+          const localityData = await collection.aggregate([
+            {
+              $group: {
+                _id: "$Locality", // Group by locality
+                totalRatio: { $sum: { $multiply: ["$Percentage Use", 100] } }, // Sum of Percentage Use * 100 (pst)
+                totalCapacity: { $sum: { $multiply: ["$Cars", 6] } }, // Sum of Cars * 6
+              }
+            },
+            {
+              $project: {
+                _id: 1, // Include the locality
+                totalRatio: 1, // Include the total ratio
+                totalCapacity: 1, // Include the total capacity
+                fitnessFunction: {
+                  $add: [
+                    { $multiply: [0.75, "$totalRatio"] }, // 0.75 * pst
+                    { $multiply: [0.25, "$totalCapacity"] } // 0.25 * Capacity of Locality
+                  ]
+                }
+              }
+            },
+            {
+              $sort: { fitnessFunction: -1 } // Sort in descending order based on fitnessFunction
+            },
+            {
+              $limit: 5 // Limit the results to the top 5
+            }
+          ]).toArray();
+      
+          return res.status(200).json(localityData);
+        } catch (error) {
+          console.error('Error fetching locality data:', error);
+          return res.status(500).json({ message: 'Error fetching locality data' });
+        }
+      });
+      
       
   
   
