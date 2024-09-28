@@ -177,8 +177,8 @@ function  Roote (props) {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '15px' }}>
-        <a onClick={props.changeView} style={{ textAlign: 'left' }}>Go Back</a>
-        <a onClick={startNav} style={{ textAlign: 'right' }}>Navigation</a>
+        <a onClick={props.changeView} style={{ textAlign: 'left' ,color: 'blue' }}>Go Back</a>
+        <a onClick={startNav} style={{ textAlign: 'right',color: 'blue'  }}>Navigation</a>
       </div>
 
       <Box height={'100vh'} width={'100vw'}>
@@ -195,7 +195,7 @@ function  Roote (props) {
           }}
           onLoad={map => setMap(map)}
         >
-          <Button  onClick= {displayRazorpay}> Pay</Button>
+          <Button  onClick= {displayRazorpay} style={{ backgroundColor: 'blue', color: 'white' }}> Pay</Button>
       {/* <Button onClick={startNav}>start navigation</Button> */}
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />

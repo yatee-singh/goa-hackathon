@@ -42,9 +42,9 @@ function Pol ()  {
   return (
    <div>
     <Header/>
-    <Heading>Police Deployment Trends</Heading>
+    <Heading mt="20px" mb="10px">Police <span className="text-blue-600 dark:text-blue-500 font-bold">Deployment</span> Trends</Heading>
     <Flex>
-     <Select placeholder='Enter Day' onChange={(e)=>{useDay(e.target.value)}}>
+     <Select placeholder='Enter Day' onChange={(e)=>{useDay(e.target.value)}} flex="0.7" marginLeft="10px" marginBottom={"30px"} marginTop={"10px"}>
     <option value="Monday">Monday</option>
         <option value="Tuesday">Tuesday</option>
         <option value="Wednesday">Wednesday</option>
@@ -53,7 +53,8 @@ function Pol ()  {
         <option value="Saturday">Saturday</option>
         <option value="Sunday">Sunday</option>
     </Select>
-    <Button onClick={handleSubmit}>
+    <Button onClick={handleSubmit} flex="0.3" marginLeft="10px" backgroundColor="blue" 
+  color="white" marginBottom={"30px"} marginTop={"10px"}>
         Get Trends
     </Button>
     </Flex>
@@ -61,20 +62,20 @@ function Pol ()  {
     {response==null?<></>:
     <TableContainer>
   <Table variant='simple'>
-    <TableCaption>Location wise sorted data</TableCaption>
+    <TableCaption color="blue">Location wise sorted data</TableCaption>
     <Thead>
       <Tr>
-        <Th>Locality</Th>
+        <Th textAlign="center" fontWeight="bold" >Locality</Th>
        
-        <Th isNumeric>Percentage of officers Deployed</Th>
+        <Th textAlign="center" fontWeight="bold" isNumeric>Percentage of officers Deployed</Th>
       </Tr>
     </Thead>
     <Tbody>
 
         {response.map(res => (
             <Tr>
-        <Td>{res._id}</Td>
-        <Td>{res.totalTicketsRequired}</Td>
+        <Td textAlign="center" >{res._id}</Td>
+        <Td textAlign="center" color="gray.500">{res.totalTicketsRequired}</Td>
       
       </Tr>
          
