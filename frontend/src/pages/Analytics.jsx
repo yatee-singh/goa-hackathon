@@ -23,7 +23,7 @@ function Analytics() {
       {/* Button group with responsive layout */}
       <div className="inline-flex flex-col md:flex-row rounded-md shadow-sm mt-6" role="group">
         <button
-          onClick={() => { navigate('/graph'); }}
+          onClick={() => { navigate('/pol'); }}
           type="button"
           className="mb-2 md:mb-0 md:mr-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
         >
@@ -38,7 +38,7 @@ function Analytics() {
         </button> */}
 
          <button
-          onClick={() => { navigate('/analytics'); }}
+          onClick={() => { navigate('/graph'); }}
           type="button"
           className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
         >
