@@ -63,7 +63,11 @@ function  Roote (props) {
     return <div>Loading...</div>;
   }
   function startNav(){
-     window.open('https://www.google.co.in/maps/dir/BITS+Pilani+K+K+Birla+Goa+Campus,+Road,+Zuarinagar,+Sancoale,+Goa/Ponda,+Goa/@15.3943121,73.85997', '_blank');
+
+     const k1=props.start.split(' ').join('+');
+     const k2=props.stop.Address.split(' ').join('+')
+     const url='https://www.google.co.in/maps/dir/'+k1+'/'+k2
+     window.open(url);
   
   }
 
