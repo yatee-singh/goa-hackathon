@@ -1,5 +1,6 @@
 import React, { useState ,forwardRef, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { Box, Button } from '@chakra-ui/react';
 import {
   useJsApiLoader,
@@ -96,6 +97,82 @@ function  Roote (props) {
     setDirectionsResponse(results)
     
   }
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+
+  async function displayRazorpay() {
+    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+    
+    if (!res) {
+      alert('Razorpay SDK failed to load. Are you online?');
+      return;
+    }
+    
+    console.log('Razorpay script loaded successfully.');
+    
+    try {
+      const result = await axios.post('http://localhost:3000/payment/orders');
+      console.log('Order creation result:', result);
+      
+      const { amount, id: order_id, currency } = result.data || {};
+      
+      if (!amount || !order_id || !currency) {
+        console.error('Invalid order data:', result.data);
+        alert('Failed to retrieve valid order data.');
+        return;
+      }
+      
+      const options = {
+        key: 'rzp_test_Iiy1obECRwNbCn', // Enter the Key ID generated from the Dashboard
+        amount: amount.toString(),
+        currency: currency,
+        name: 'Soumya Corp.',
+        description: 'Test Transaction',
+        //image: 'https://your-image-url.com/logo.png', // Update this if needed
+        order_id: order_id,
+        handler: async function (response) {
+          console.log('Payment successful:', response);
+          const data = {
+            orderCreationId: order_id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpayOrderId: response.razorpay_order_id,
+            razorpaySignature: response.razorpay_signature,
+          };
+          
+          const result = await axios.post('/payment/success', data);
+          alert(result.data.msg);
+        },
+        prefill: {
+          name: '<YOUR NAME>',
+          email: 'example@example.com',
+          contact: '9999999999',
+        },
+        theme: {
+          color: '#61dafb',
+        },
+      };
+      
+      console.log('Razorpay options:', options);
+      
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.error('Error in displayRazorpay:', error);
+      alert('Something went wrong with the payment. Please try again.');
+    }
+  }
+
 
   return (
     <div>
@@ -115,7 +192,7 @@ function  Roote (props) {
           }}
           onLoad={map => setMap(map)}
         >
-          <Button  onClick={() => { navigate('/pay'); }}> Pay</Button>
+          <Button  onClick= {displayRazorpay}> Pay</Button>
       <Button onClick={startNav}>start navigation</Button>
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
