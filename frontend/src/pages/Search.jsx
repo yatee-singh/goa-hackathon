@@ -184,12 +184,16 @@ const calculateDistance = (latLngA, latLngB) => {
     return distanceA - distanceB; // Sort in ascending order
   });
 
-  console.log(distances);
-  setFilter(distances)
+  const limitedDistances = distances.slice(0, 20);
+
+  // Update the state with the first 20 (or fewer) distances
+  setFilter(limitedDistances);
+ 
 }
 
 function switchView(viewMap)
 {
+  console.log(viewMap)
   if(viewMap==1)
   {
     setViewMap(2)
@@ -217,7 +221,7 @@ function changeView()
               
     
 
-<form class="pb-10">   
+<form class="">   
     <label for="search" class="flex-col px-4 py-6 md:px-8 md:py-12 mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
     <div class="relative">
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -235,12 +239,13 @@ function changeView()
         
     </div>
 </form>
-<a onClick={()=>{switchView(viewMap)}}>Switch View</a>
+{viewMap==3?<></>:<span class="float-right"><a onClick={()=>{switchView(viewMap)} }>Switch View</a></span>}
 
 {viewMap==1?
 <>
         {filter.length==0?
         <div class="relative overflow-x-auto">
+          {/* <a onClick={()=>{switchView(viewMap)}}>Switch View</a> */}
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -274,6 +279,7 @@ function changeView()
         </table>
         </div>:
         <div class="relative overflow-x-auto">
+   
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -321,7 +327,7 @@ function changeView()
         </table>
         </div>}
         
-  </>:viewMap==2?<MapLocations data={data}/>:
+  </>:viewMap==2?<MapLocations data={data} switchView={switchView} viewMap={viewMap}/>:
   <Roote changeView={changeView} start={originRef.current.value} stop={stop} ref={originRef} />}
 
 

@@ -1,11 +1,11 @@
+import React from 'react';
 
-
-function Pay() {
+function Pay  ()  {
   return (
-    <div >
-    payy
-    </div>
+    <header>
+      <h1>PAyyy </h1>
+    </header>
   );
 }
 
-export default Pay;
+export default Pay

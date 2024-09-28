@@ -15,11 +15,11 @@ function User() {
 
       <div className="inline-flex rounded-md shadow-sm flex flex-col md:flex-row justify-center mt-6" role="group">
         <button 
-          onClick={() => { navigate('/tickets'); }} 
+          onClick={() => { navigate('/avail'); }} 
           type="button" 
           className="mb-2 md:mb-0 md:mr-2 px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
         >
-          View Tickets
+        Predict Availability
         </button>
         <button 
           onClick={() => { navigate('/search'); }} 

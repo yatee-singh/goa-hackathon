@@ -54,11 +54,12 @@ function MapLocations(props) {
     <div>
      
       <Box height={'100vh'} width={'100vw'}>
+        {/* <a onClick={props.switchView(props.viewMap)}>Switch View</a> */}
         <Box  h='100%' w='100%'>
           <GoogleMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={{ lat: 15.4909, lng: 73.8278 }} // Center of the map
-            zoom={10} // Set the initial zoom level
+            zoom={15} // Set the initial zoom level
             options={{
               zoomControl: true,
               streetViewControl: false,
