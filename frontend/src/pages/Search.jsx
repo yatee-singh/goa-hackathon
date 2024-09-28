@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -22,6 +22,7 @@ import {
 } from '@react-google-maps/api'
 import { useRef, useState,useEffect } from 'react'
 import MapLocations from './MapLocations';
+import Roote from './Roote';
 function Search  ()  {
       const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
@@ -52,12 +53,13 @@ function Search  ()  {
   /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef()
 
-  const [viewMap,setViewMap]=useState(false);
+  const [viewMap,setViewMap]=useState(1);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sortedMarkers, setSortedMarkers] = useState([]); // Store sorted markers
-
+  const [filter,setFilter]=useState([]);
+  const [stop,setStop]=useState();
  
 
   if (loading) {
@@ -128,38 +130,85 @@ const calculateDistance = (latLngA, latLngB) => {
 
  const  handleSearch =async (event) => {
   event.preventDefault()
-  const originPlace = originRef.current.value;
 
+  const originPlace = originRef.current.value;
+  const distances=[]
   if (originPlace === '') {
     alert('Please enter a location');
     return;
   }
-  const distances=[]
-const directionsService = new google.maps.DirectionsService()
-  data.map(async function(location, index) {
-      console.log(location.Latitude,location.Longitude)
+
+  const directionsService = new google.maps.DirectionsService()
+  const promises = data.map(async (location) => {
+    const lat = Number(location.Latitude);
+    const lng = Number(location.Longitude);
+
+    if (isNaN(lat) || isNaN(lng)) {
+      console.error('Invalid lat/lng for location:', location);
+      return null;
+    }
+
+    const location2 = { lat, lng };
+
+    try {
       const results = await directionsService.route({
-      origin: originRef.current.value,
-      destination: {lat:location.Latitude,lng:location.Longitude},
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.DRIVING,
-    });
-     distances.append([...location,results.routes[0].legs[0].distance.text])
+        origin: originPlace,
+        destination: location2,
+        travelMode: google.maps.TravelMode.DRIVING,
+      });
+
+      // Return an object that combines location with the distance
+      return {
+        ...location, // Spread the location properties
+        distance: results.routes[0].legs[0].distance.text, // Add the distance
+      };
+    } catch (error) {
+      console.error('Error with directionsService.route:', error);
+      return null;
+    }
+  });
+
+  // Wait for all promises to resolve
+  const resolvedDistances = await Promise.all(promises);
+
+  // Filter out any null results (in case of errors)
+  const validDistances = resolvedDistances.filter(result => result !== null);
+
+  // Push valid distances into distances array
+  distances.push(...validDistances);
+
+  distances.sort((a, b) => {
+    // Extract numerical distance values from strings (e.g., "10 km" or "2 miles")
+    const distanceA = parseFloat(a.distance); // Adjust this logic if distances have different formats
+    const distanceB = parseFloat(b.distance);
+    return distanceA - distanceB; // Sort in ascending order
+  });
+
+  console.log(distances);
+  setFilter(distances)
+}
+
+function switchView(viewMap)
+{
+  if(viewMap==1)
+  {
+    setViewMap(2)
   }
+  else{
+    setViewMap(1)
+  }
+}
 
-   
+function handleNavigate(loc)
+{
+  setViewMap(3);
+  setStop(loc)
+}
 
-  )
-
-  console.log(distances)
-
-  
-    
-    
-
- 
-};
-
+function changeView()
+{
+  setViewMap(1)
+}
   return (
     <div>
 
@@ -186,10 +235,12 @@ const directionsService = new google.maps.DirectionsService()
         
     </div>
 </form>
-<a onClick={()=>{setViewMap(!viewMap)}}>View In Map</a>
+<a onClick={()=>{switchView(viewMap)}}>Switch View</a>
 
-{viewMap?
-<div class="relative overflow-x-auto">
+{viewMap==1?
+<>
+        {filter.length==0?
+        <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -199,14 +250,12 @@ const directionsService = new google.maps.DirectionsService()
                 <th scope="col" class="px-6 py-3">
                    Availability
                 </th>
-                <th scope="col" class="px-6 py-3">
-                   Route
-                </th>
+               
                 
             </tr>
         </thead>
         <tbody>
-             {data.map((location, index) => (
+            { data.map((location, index) => (
                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {location.Address}
@@ -214,9 +263,53 @@ const directionsService = new google.maps.DirectionsService()
                 <td class="px-6 py-4">
                     {location.Cars}
                 </td>
+               
+            </tr>
+       
+      
+        ))}
+          
+           
+        </tbody>
+        </table>
+        </div>:
+        <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                   Parking Lot
+                </th>
+                <th scope="col" class="px-6 py-3">
+                   Availability
+                </th>
+                 <th scope="col" class="px-6 py-3">
+                   Distance
+                </th>
+                <th scope="col" class="px-6 py-3">
+                   Route
+                </th>
+
+                
+            </tr>
+        </thead>
+        <tbody>
+             {filter.map((location, index) => (
+                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {location.Address}
+                </th>
                 <td class="px-6 py-4">
-                    <Button onClick={()=>{navigate('/route')}}/>
+                    {location.Cars}
                 </td>
+                 <td class="px-6 py-4">
+                    {location.distance}
+                </td>
+                <td class="px-6 py-4">
+                    <Button background={'blue'} onClick={()=>{handleNavigate(location)}}/>
+                     
+                </td>
+               
                 
             </tr>
        
@@ -225,8 +318,11 @@ const directionsService = new google.maps.DirectionsService()
           
            
         </tbody>
-    </table>
-</div>:<MapLocations data={data}/>}
+        </table>
+        </div>}
+        
+  </>:viewMap==2?<MapLocations data={data}/>:
+  <Roote changeView={changeView} start={originRef.current.value} stop={stop} ref={originRef} />}
 
 
 
