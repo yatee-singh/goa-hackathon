@@ -8,6 +8,7 @@ import mongoose from "mongoose"; // For Mongoose
 import { MongoClient } from "mongodb"; // For MongoClient from the native MongoDB driver
 import dotenv from "dotenv";
 import cors from 'cors'
+import payment from "./routes/payment.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
@@ -39,6 +40,8 @@ async function connectDB() {
   
 connectDB();
 
+app.use("/payment", payment);
+//console.log(process.env.RAZORPAY_KEY_ID, process.env.RAZORPAY_SECRET);
 
 app.get("/", async (req, res) => {
   
