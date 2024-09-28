@@ -1,5 +1,6 @@
 import React from 'react';
 import ParkingGraph from './ParkingGraph';
+import Header from '../Normal';
 
 const Graph = () => {
   const parkingData = {
@@ -122,7 +123,8 @@ const Graph = () => {
   const daysOfWeek = Object.keys(parkingData);
 
   return (
-    <div>
+    <div className='px-4 py-6 md:px-8 md:py-12 height:100vh'>
+      <Header/>
       <h1>Parking Lot Data - Weekly Overview</h1>
       {daysOfWeek.map((day) => (
         <div key={day}>

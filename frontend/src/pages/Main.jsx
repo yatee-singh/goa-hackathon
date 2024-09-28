@@ -1,9 +1,9 @@
 import BookTickets from "./BookTickets";
 import Desp from "./Desp";
-import Header from "./Header";
+
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from 'react-router-dom';
-
+import Header from "../Normal";
 function Main() {
   const navigate = useNavigate();
 
@@ -12,8 +12,9 @@ function Main() {
   };
 
   return (
-    <div className="px-4 py-6 md:px-8 md:py-12">
-      <h1 className="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
+    <div className="px-4 py-6 md:px-8 md:py-12 height:100vh">
+      <Header/>
+      <h1 className="mb-4 mt-56 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
         Get back to growth with <span className="text-blue-600 dark:text-blue-500">the world's #1</span> CRM.
       </h1>
       <p className="text-base font-normal text-gray-500 lg:text-lg dark:text-gray-400">

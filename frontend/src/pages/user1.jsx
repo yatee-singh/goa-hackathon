@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../Normal';
 
 function User() {
   const navigate = useNavigate();
 
   return (
     <div className="px-4 py-6 md:px-8 md:py-12">
-      <h1 className="mb-4 text-3xl md:text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white text-center">
+      <Header/>
+      <h1 className="mb-4 mt-56 text-3xl md:text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white text-center">
         User
       </h1>
       <p className="text-base md:text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 text-center">

@@ -137,7 +137,7 @@ function  Roote (props) {
         key: 'rzp_test_Iiy1obECRwNbCn', // Enter the Key ID generated from the Dashboard
         amount: amount.toString(),
         currency: currency,
-        name: 'Soumya Corp.',
+        name:props.stop.Address,
         description: 'Test Transaction',
         //image: 'https://your-image-url.com/logo.png', // Update this if needed
         order_id: order_id,
@@ -178,7 +178,7 @@ function  Roote (props) {
     <div>
       <a onClick={props.changeView}>Go Back</a>
     
-      <Box height={'100vh'} width={'100vw'}>
+      <Box height={'100%'} width={'100%'}>
         <Box  h='100%' w='100%'>
           <GoogleMap
          center={{ lat: 15.5527, lng: 73.7490 }}
