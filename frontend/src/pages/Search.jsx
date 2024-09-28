@@ -12,7 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 // import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-
+import Header from '../Normal';
 import {
   useJsApiLoader,
   GoogleMap,
@@ -214,31 +214,34 @@ function changeView()
   setViewMap(1)
 }
   return (
-    <div>
+   <div className="px-4 py-6 md:px-8 md:py-12 height:100vh">
 
-        <Flex  flexDirection={'column'} height={'100vh'}>
+
+<Header/>
+
+        <Flex  flexDirection={'column'} >
 
               
     
 
-<form class="">   
-    <label for="search" class="flex-col px-4 py-6 md:px-8 md:py-12 mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-    <div class="relative">
-        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-        </div>
+  
+   
+   
+
+      <Flex alignItems={'flex-start'}>
+      
        <Autocomplete>
-        <input ref={originRef} type="search" id="search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
+         <Input ref={originRef}  placeholder='Enter you location' size='lg' />
+        
     </Autocomplete>
-    <button onClick={handleSearch} class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-    
+    {/* <button onClick={handleSearch} class="text-white  p-5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
+    <Button onClick={handleSearch} > Search</Button>
+    </Flex>
         {/* <button onClick={handleSearch} class="text-white absolute end-23 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
 
         
-    </div>
-</form>
+ 
+
 {viewMap==3?<></>:<span class="float-right"><a onClick={()=>{switchView(viewMap)} }>Switch View</a></span>}
 
 {viewMap==1?
@@ -246,7 +249,7 @@ function changeView()
         {filter.length==0?
         <div class="relative overflow-x-auto">
           {/* <a onClick={()=>{switchView(viewMap)}}>Switch View</a> */}
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -280,7 +283,7 @@ function changeView()
         </div>:
         <div class="relative overflow-x-auto">
    
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">

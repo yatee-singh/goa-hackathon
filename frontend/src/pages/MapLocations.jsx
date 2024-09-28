@@ -53,7 +53,7 @@ function MapLocations(props) {
   return (
     <div>
      
-      <Box height={'100vh'} width={'100vw'}>
+      <Box height={'100vh'} width={'100wh'}>
         {/* <a onClick={props.switchView(props.viewMap)}>Switch View</a> */}
         <Box  h='100%' w='100%'>
           <GoogleMap
