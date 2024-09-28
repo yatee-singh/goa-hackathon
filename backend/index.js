@@ -64,7 +64,7 @@ app.get("/data", async (req, res) =>{
   }
 })
 
-app.post('/location', async (req, res) => {
+app.post('/location', async (req, res) => { //In a particular location, the percentage of parking filled up based on assumption that 4 hr slots are given
     const { location } = req.body; // Destructure location from the request body
   
     if (!location) {
@@ -125,7 +125,7 @@ app.post('/location', async (req, res) => {
     }
   });
 
-  app.post('/predictAv', async (req, res) => {
+  app.post('/predictAv', async (req, res) => { //get prob of getting a parking space on a location on a particular day
     const { location, day } = req.body; // Destructure location and day from the request body
   
     if (!location || !day) {
@@ -181,6 +181,82 @@ app.post('/location', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
+    app.post('/polDeploy', async (req, res) => { // how to deploy police on a particular day percentage wise
+        const { day } = req.body; // Destructure day from the request body
+      
+        if (!day) {
+          return res.status(400).json({ message: 'Day is required' });
+        }
+      
+        // Define a mapping for the days to their corresponding database fields
+        const dayMapping = {
+          "Monday": "Mon",
+          "Tuesday": "Tue",
+          "Wednesday": "Wed",
+          "Thursday": "Thu",
+          "Friday": "Fri",
+          "Saturday": "Sat",
+          "Sunday": "Sun"
+        };
+      
+        // Check if the provided day is valid
+        if (!dayMapping[day]) {
+          return res.status(400).json({ message: 'Invalid day provided' });
+        }
+      
+        try {
+          const database = client.db('test'); // Replace with your actual database name
+          const collection = database.collection('analyticsData'); // Replace with your actual collection name
+      
+          // Query the database for all locations
+          const ticketData = await collection.aggregate([
+            {
+              $group: {
+                _id: "$Locality", // Group by locality
+                totalTicketsRequired: {
+                  $sum: {
+                    $cond: [
+                      { $gt: ["$Percentage use", 0] }, // Check if PercentageUse > 0
+                      {
+                        $divide: [
+                          { $multiply: [`$${dayMapping[day]}`, "$Total tickets sold in a day"] }, // (Day * Total tickets sold)
+                          "$Percentage use" // Divide by PercentageUse if it's greater than 0
+                        ]
+                      },
+                      { $multiply: [`$${dayMapping[day]}`, "$Total tickets sold in a day"] } // Default value when PercentageUse is 0 or missing
+                    ]
+                  }
+                }
+              }
+            }
+          ]).toArray();
+      
+          console.log(ticketData);
+      
+          if (ticketData.length === 0) {
+            return res.status(404).json({ message: 'No data found' });
+          }
+          var sum = 0;
+          for(var i = 0; i < ticketData.length; i++)
+          {
+            ticketData[i].totalTicketsRequired = Math.round(ticketData[i].totalTicketsRequired/120);
+            sum += ticketData[i].totalTicketsRequired;
+          }
+          for(var i = 0; i < ticketData.length; i++)
+            {
+              ticketData[i].totalTicketsRequired = ticketData[i].totalTicketsRequired * 100 / sum;
+            }
+      
+          // Send the calculated total tickets for each locality as a response
+          res.status(200).json(ticketData); // Returning all locations' total tickets
+        } catch (error) {
+          console.error('Error querying data:', error);
+          res.status(500).json({ message: 'Internal server error' });
+        }
+      });
+      
+  
   
 
 
