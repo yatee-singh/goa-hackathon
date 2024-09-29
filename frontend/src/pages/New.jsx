@@ -72,9 +72,9 @@ function New()  {
                   <Tr >
                     <div className='pt-4'>
                         <p><strong>Locality:</strong> {item._id}</p>
-                        <p><strong>Total Ratio:</strong> {item.totalRatio}</p>
+                        {/* <p><strong>Total Ratio:</strong> {item.totalRatio}</p> */}
                         <p><strong>Total Capacity:</strong> {item.totalCapacity}</p>
-                        <p><strong>Fitness Function:</strong> {item.fitnessFunction}</p>
+                        {/* <p><strong>Fitness Function:</strong> {item.fitnessFunction}</p> */}
                         </div>
                    </Tr>
                 ))}

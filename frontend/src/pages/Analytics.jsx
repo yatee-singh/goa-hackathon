@@ -17,7 +17,7 @@ function Analytics() {
       Analyti<span className="text-blue-600 dark:text-blue-500 font-bold">cs</span>
       </h1>
       <p className="text-base font-normal text-gray-500 lg:text-lg dark:text-gray-400 px-6">
-        Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+      Unlock the power of data to enhance decision-making and drive operational efficiency. 
       </p>
 
       {/* Button group with responsive layout */}
@@ -40,7 +40,7 @@ function Analytics() {
          <button
           onClick={() => { navigate('/graph'); }}
           type="button"
-          className="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+          className="px-4 py-2 mb-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
         >
           Location Based Analytics
         </button>
