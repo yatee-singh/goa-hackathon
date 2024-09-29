@@ -92,26 +92,36 @@ const Graph = () => {
     <div className='px-4 py-6 md:px-8 md:py-12 height:100vh'>
       <Header/>
       <Flex direction={'column'}>
-        <Heading>
-          Choose Location, to get the weekly Trends
+        <Heading marginTop={'20px'} marginBottom={'20px'}>
+          Location <span className="text-blue-600 dark:text-blue-500">Wise</span> Trends
         </Heading>
         <div className='dropdown-container'>
-    <Select variant='filled' placeholder='Enter Location' width={'60vw'} onChange={(e)=>{setLocation(e.target.value)}} >
-          <option className='option' value={'Panaji'}>
-            Panjim
-          </option>
-          <option className='option' value={'Porvorim'}>
-            Panjim
-          </option>
-          <option className='option' value={'Vasco'}>
-            Vasco
-          </option>
-        </Select>
+        <Flex width="100%" justify="space-between">
+          <Select 
+            variant='filled' 
+            placeholder='Enter Location' 
+            width="70%"  // 70% width for the Select
+            padding={"none"}
+            margin={"0px"}
+            onChange={(e) => setLocation(e.target.value)}
+          >
+            <option className='option' value={'Panaji'}>Panjim</option>
+            <option className='option' value={'Porvorim'}>Porvorim</option>
+            <option className='option' value={'Vasco'}>Vasco</option>
+          </Select>
 
-        <Button width={'60vw'} onClick={handleSubmit}>
-          Get Data
-        </Button>
-        </div>
+          <Button 
+            width="30%"  // 30% width for the Button
+            marginLeft="10px"  // Adds space between the Select and Button
+            onClick={handleSubmit}
+            
+          >
+            Get Data
+          </Button>
+          
+        </Flex>
+       </div>
+
         
       </Flex>
       {/* <h1>Parking Lot Data - Weekly Overview</h1>
@@ -124,8 +134,8 @@ const Graph = () => {
        {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {data && (
-        <div>
-          <h2>Traffic Data for {location}</h2>
+        <div style={{ marginTop: '30px' }}>
+          <h2 style={{ marginBottom: '20px',color:'blue',fontWeight: 'bold' }}>Traffic Data for {location}</h2>
           <Bar data={chartData}  />
         </div>
       )}
