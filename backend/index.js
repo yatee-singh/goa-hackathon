@@ -295,7 +295,7 @@ app.post('/location', async (req, res) => { //In a particular location, the perc
       
           const parkingUpdateResult = await parkingCollection.updateOne(
             { Address: locationId },
-            { $inc: { availableSpaces: spaceUpdate } } // Increment or decrement based on 'entered'
+            { $inc: { "Available Spaces": spaceUpdate } } // Increment or decrement based on 'entered'
           );
       
           if (parkingUpdateResult.matchedCount === 0) {
