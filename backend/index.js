@@ -174,7 +174,7 @@ app.post('/location', async (req, res) => { //In a particular location, the perc
       const prob = (1 - averageData[0].averageValue) * 100
       res.status(200).json({
         location: averageData[0]._id,
-        average: prob + "%"
+        average: prob.toPrecision(2) + "%"
       });
     } catch (error) {
       console.error('Error querying data:', error);
@@ -246,6 +246,7 @@ app.post('/location', async (req, res) => { //In a particular location, the perc
           for(var i = 0; i < ticketData.length; i++)
             {
               ticketData[i].totalTicketsRequired = ticketData[i].totalTicketsRequired * 100 / sum;
+              ticketData[i].totalTicketsRequired = ticketData[i].totalTicketsRequired.toPrecision(2);
             }
       
           // Send the calculated total tickets for each locality as a response
@@ -295,7 +296,7 @@ app.post('/location', async (req, res) => { //In a particular location, the perc
       
           const parkingUpdateResult = await parkingCollection.updateOne(
             { Address: locationId },
-            { $inc: { availableSpaces: spaceUpdate } } // Increment or decrement based on 'entered'
+            { $inc: { "Available Spaces": spaceUpdate } } // Increment or decrement based on 'entered'
           );
       
           if (parkingUpdateResult.matchedCount === 0) {

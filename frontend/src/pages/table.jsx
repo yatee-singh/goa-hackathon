@@ -10,10 +10,10 @@ function Tab (props)  {
   {props.location.Address}
   </Heading>
         </Box>
-        <Flex direction={'row'}  justifyItems={'baseline'} justifyContent={'space-between'}>
+        <Flex direction={'row'}  justifyItems={'baseline'} justifyContent={'flex-start'}>
 
 <Box padding={'1em'}>{props.location.distance}</Box>
-<Box padding={'1em'}><Button height={'-moz-max-content'}>route</Button></Box>
+<Box padding={'1em'} ><Button backgroundColor={'blue'} color={'white'} paddingY={'0.2rem'} height={'-moz-initial'} onClick={props.handleNaviagte(props.loaction)}>route</Button></Box>
         </Flex>
 
         

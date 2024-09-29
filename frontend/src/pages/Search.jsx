@@ -78,6 +78,26 @@ function Search() {
     return <div>Loading..</div>
   }
 
+  function refresh()
+  {
+    fetch('http://localhost:3000/data')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+    console.log(data)
+  }
+
 
 
   // const calculateDistance = (latLngA, latLngB) => {
@@ -88,49 +108,10 @@ function Search() {
   };
 
 
-  async function calculateRoute() {
-
-    console.log(start, stop)
-    if ((originRef.current.value === '' && current === '') || (destiantionRef.current.value === '' && stop === '')) {
-      return
-    }
-
-    if (start == '') {
-      console.log(start, location, stop)
-      setstop(destiantionRef.current.value)
-      const directionsService = new google.maps.DirectionsService()
-      const results = await directionsService.route({
-        origin: location,
-        destination: destiantionRef.current.value,
-        // eslint-disable-next-line no-undef
-        travelMode: google.maps.TravelMode.DRIVING,
-      })
-      setDirectionsResponse(results)
-      setDistance(results.routes[0].legs[0].distance.text)
-      setDuration(results.routes[0].legs[0].duration.text)
-
-      return;
-    }
-    setstart(originRef.current.value)
-    setstop(destiantionRef.current.value)
-    console.log(start, stop)
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService()
-    const results = await directionsService.route({
-      origin: start,
-      destination: stop,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.DRIVING,
-    })
-    setDirectionsResponse(results)
-    setDistance(results.routes[0].legs[0].distance.text)
-    setDuration(results.routes[0].legs[0].duration.text)
-
-  }
-
+ 
 
   const handleSearch = async (event) => {
-    event.preventDefault()
+    refresh()
 
     const originPlace = originRef.current.value;
     const distances = []
@@ -176,12 +157,14 @@ function Search() {
     const validDistances = resolvedDistances.filter(result => result !== null);
 
     // Push valid distances into distances array
+
     distances.push(...validDistances);
 
     distances.sort((a, b) => {
       // Extract numerical distance values from strings (e.g., "10 km" or "2 miles")
       const distanceA = parseFloat(a.distance); // Adjust this logic if distances have different formats
       const distanceB = parseFloat(b.distance);
+      console.log(distances)
       return distanceA - distanceB; // Sort in ascending order
     });
 
@@ -326,6 +309,33 @@ function Search() {
                </tbody>
              </table>
            </div>
+
+          //  <div className="relative overflow-x-auto px-1">
+          //       <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" style={{ width: '100%' }}>
+          //         <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          //           <tr>
+          //             <th scope="col" className="px-4 py-3 w-7/10"> {/* 70% width */}
+          //               Parking Lot
+          //             </th>
+          //             <th scope="col" className="px-4 py-3 w-3/10"> {/* 30% width */}
+          //               Availability
+          //             </th>
+          //           </tr>
+          //         </thead>
+          //         <tbody>
+          //           {filter.map((location, index) => (
+          //         <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          //               <td className="px-4 py-3 w-7/10 font-medium text-gray-900 whitespace-normal dark:text-white">
+          //                 <Tab location={location} handleNavigate={handleNavigate(loc)}/>
+          //               </td>
+          //               <td className="px-4 py-3 w-3/10">
+          //                 {location['Available Spaces']}
+          //               </td>
+          //             </tr>
+          //        ))}
+          //      </tbody>
+          //    </table>
+          //  </div>
 
           //  <div className="relative overflow-x-auto px-1">
           //       <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" style={{ width: '100%' }}>
