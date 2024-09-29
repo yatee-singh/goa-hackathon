@@ -68,7 +68,7 @@ function Pol ()  {
       <Tr>
         <Th textAlign="center" fontWeight="bold" >Locality</Th>
        
-        <Th textAlign="center" fontWeight="bold" isNumeric>Percentage of officers Deployed</Th>
+        <Th textAlign="center" fontWeight="bold" isNumeric>Percentage officers to be Deployed</Th>
       </Tr>
     </Thead>
     <Tbody>

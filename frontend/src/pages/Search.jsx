@@ -333,9 +333,36 @@ function Search() {
                         </td>
                       </tr>
                  ))}
-                  </tbody>
-                </table>
-              </div>
+               </tbody>
+             </table>
+           </div>
+
+          //  <div className="relative overflow-x-auto px-1">
+          //       <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" style={{ width: '100%' }}>
+          //         <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          //           <tr>
+          //             <th scope="col" className="px-4 py-3 w-7/10"> {/* 70% width */}
+          //               Parking Lot
+          //             </th>
+          //             <th scope="col" className="px-4 py-3 w-3/10"> {/* 30% width */}
+          //               Availability
+          //             </th>
+          //           </tr>
+          //         </thead>
+          //         <tbody>
+          //           {filter.map((location, index) => (
+          //         <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          //               <td className="px-4 py-3 w-7/10 font-medium text-gray-900 whitespace-normal dark:text-white">
+          //                 <Tab location={location}/>
+          //               </td>
+          //               <td className="px-4 py-3 w-3/10">
+          //                 {location.Cars}
+          //               </td>
+          //             </tr>
+          //        ))}
+          //         </tbody>
+          //       </table>
+          //     </div>
            
 
            
