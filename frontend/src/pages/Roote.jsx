@@ -1,7 +1,7 @@
 import React, { useState ,forwardRef, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button,Input } from '@chakra-ui/react';
 import {
   useJsApiLoader,
   GoogleMap,
@@ -50,6 +50,12 @@ function  Roote (props) {
     libraries: ['places'],
   });
 
+  const [userData, setUserData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+  });
+
   useEffect(() => {
     // Fetch data from the endpoint
    calculateRoute()
@@ -63,6 +69,11 @@ function  Roote (props) {
   if (!isLoaded) {
     return <div>Loading...</div>;
   }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({ ...prev, [name]: value }));
+  };
   function startNav(){
 
      const k1=props.start.split(' ').join('+');
@@ -195,7 +206,7 @@ function  Roote (props) {
           }}
           onLoad={map => setMap(map)}
         >
-          <Button  onClick= {displayRazorpay} style={{ backgroundColor: 'blue', color: 'white' }}> Pay</Button>
+          <Button  onClick= {() => { navigate('/pay'); }}style={{ backgroundColor: 'blue', color: 'white' }}> Pay</Button>
       {/* <Button onClick={startNav}>start navigation</Button> */}
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />

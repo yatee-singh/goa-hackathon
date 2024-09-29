@@ -45,7 +45,7 @@ const Graph = () => {
     labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     datasets: [
       {
-        label: `Average Traffic for ${location}`,
+        //label: `Average Traffic for ${location}`,
         data: [
           data.monPerEntry,
           data.tuePerEntry,
@@ -77,6 +77,13 @@ const Graph = () => {
       },
     ],
   };
+  const options = {
+    plugins: {
+      legend: {
+        display: false, // This will remove the legend from the chart
+      },
+    },
+  };
 
   const handleSubmit = (e) => {
     console.log(location)
@@ -105,9 +112,19 @@ const Graph = () => {
             margin={"0px"}
             onChange={(e) => setLocation(e.target.value)}
           >
-            <option className='option' value={'Panaji'}>Panjim</option>
-            <option className='option' value={'Porvorim'}>Porvorim</option>
-            <option className='option' value={'Vasco'}>Vasco</option>
+            <option value={'Panaji'}>Panaji</option>
+              <option value={'Vasco'}>Vasco</option>
+              <option value={'Mopa'}>Mopa</option>
+              <option value={'Curchorem'}>Curchorem</option>
+              <option value={'Anjuna'}>Anjuna</option>
+              <option value={'Calangute'}>Calangute</option>
+              <option value={'Margao'}>Margao</option>
+              <option value={'Bicholim'}>Bicholim</option>
+              <option value={'Colva'}>Colva</option>
+              <option value={'Canacona'}>Canacona</option>
+              <option value={'Porvorim'}>Porvorim</option>
+              <option value={'Mapusa'}>Mapusa</option>
+              <option value={'Quepem'}>Quepem</option>
           </Select>
 
           <Button 
@@ -136,7 +153,7 @@ const Graph = () => {
       {data && (
         <div style={{ marginTop: '30px' }}>
           <h2 style={{ marginBottom: '20px',color:'blue',fontWeight: 'bold' }}>Traffic Data for {location}</h2>
-          <Bar data={chartData}  />
+          <Bar data={chartData} options={options} />
         </div>
       )}
 

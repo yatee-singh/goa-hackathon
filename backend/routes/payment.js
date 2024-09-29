@@ -42,11 +42,8 @@ router.post("/success", async (req, res) => {
             razorpayPaymentId,
             razorpayOrderId,
             razorpaySignature,
-            // userPhoneNumber, // Commenting out this line as we're hardcoding the number
+            userPhoneNumber, // Receive the user's phone number from the request
         } = req.body;
-
-        // Hardcode the user phone number
-        const userPhoneNumber = '+917000876346'; // Hardcoded phone number
 
         // Existing verification code...
 
@@ -54,7 +51,7 @@ router.post("/success", async (req, res) => {
         const message = await client.messages.create({
             body: `Your payment was successful! Order ID: ${razorpayOrderId}, Payment ID: ${razorpayPaymentId}`,
             from: process.env.TWILIO_PHONE_NUMBER, // Your Twilio phone number
-            to: userPhoneNumber // Using the hardcoded phone number
+            to: userPhoneNumber // Use the phone number received from the request
         });
 
         console.log(`SMS sent: ${message.sid}`); // Log the message SID
