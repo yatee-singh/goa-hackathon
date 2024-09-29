@@ -1,137 +1,136 @@
 import React from 'react';
 import ParkingGraph from './ParkingGraph';
 import Header from '../Normal';
+import '../App.css'
+import { Bar } from 'react-chartjs-2';
+import 'chart.js/auto';
+import { useState } from 'react';
+import { Heading,Flex ,Select,Button} from '@chakra-ui/react';
 
 const Graph = () => {
-  const parkingData = {
-    Monday: [
-      { lot: "Bicholim", cars: 100 },
-      { lot: "Calangute", cars: 500 }, // Popular beach area
-      { lot: "Mopa", cars: 350 }, // Airport, consistent traffic
-      { lot: "Anjuna", cars: 400 }, // Popular for tourists
-      { lot: "Porvorim", cars: 200 },
-      { lot: "Panaji", cars: 450 }, // Capital, high traffic
-      { lot: "Mapusa", cars: 300 },
-      { lot: "Dabolim", cars: 300 },
-      { lot: "Quepem", cars: 150 },
-      { lot: "Cacacona", cars: 180 },
-      { lot: "Colva", cars: 200 },
-      { lot: "Vasco", cars: 350 },
-      { lot: "Curchorem", cars: 120 },
-      { lot: "Margao", cars: 280 },
-    ],
-    Tuesday: [
-      { lot: "Bicholim", cars: 150 },
-      { lot: "Calangute", cars: 550 },
-      { lot: "Mopa", cars: 380 },
-      { lot: "Anjuna", cars: 420 },
-      { lot: "Porvorim", cars: 220 },
-      { lot: "Panaji", cars: 480 },
-      { lot: "Mapusa", cars: 350 },
-      { lot: "Dabolim", cars: 320 },
-      { lot: "Quepem", cars: 180 },
-      { lot: "Cacacona", cars: 200 },
-      { lot: "Colva", cars: 250 },
-      { lot: "Vasco", cars: 320 },
-      { lot: "Curchorem", cars: 130 },
-      { lot: "Margao", cars: 300 },
-    ],
-    Wednesday: [
-      { lot: "Bicholim", cars: 180 },
-      { lot: "Calangute", cars: 600 },
-      { lot: "Mopa", cars: 400 },
-      { lot: "Anjuna", cars: 450 },
-      { lot: "Porvorim", cars: 250 },
-      { lot: "Panaji", cars: 500 },
-      { lot: "Mapusa", cars: 400 },
-      { lot: "Dabolim", cars: 350 },
-      { lot: "Quepem", cars: 200 },
-      { lot: "Cacacona", cars: 220 },
-      { lot: "Colva", cars: 280 },
-      { lot: "Vasco", cars: 380 },
-      { lot: "Curchorem", cars: 140 },
-      { lot: "Margao", cars: 350 },
-    ],
-    Thursday: [
-      { lot: "Bicholim", cars: 220 },
-      { lot: "Calangute", cars: 650 },
-      { lot: "Mopa", cars: 420 },
-      { lot: "Anjuna", cars: 480 },
-      { lot: "Porvorim", cars: 280 },
-      { lot: "Panaji", cars: 550 },
-      { lot: "Mapusa", cars: 450 },
-      { lot: "Dabolim", cars: 400 },
-      { lot: "Quepem", cars: 250 },
-      { lot: "Cacacona", cars: 250 },
-      { lot: "Colva", cars: 300 },
-      { lot: "Vasco", cars: 400 },
-      { lot: "Curchorem", cars: 180 },
-      { lot: "Margao", cars: 380 },
-    ],
-    Friday: [
-      { lot: "Bicholim", cars: 280 },
-      { lot: "Calangute", cars: 750 }, // Friday increase in popular spots
-      { lot: "Mopa", cars: 500 },
-      { lot: "Anjuna", cars: 550 },
-      { lot: "Porvorim", cars: 320 },
-      { lot: "Panaji", cars: 600 },
-      { lot: "Mapusa", cars: 480 },
-      { lot: "Dabolim", cars: 450 },
-      { lot: "Quepem", cars: 280 },
-      { lot: "Cacacona", cars: 300 },
-      { lot: "Colva", cars: 350 },
-      { lot: "Vasco", cars: 480 },
-      { lot: "Curchorem", cars: 220 },
-      { lot: "Margao", cars: 450 },
-    ],
-    Saturday: [
-      { lot: "Bicholim", cars: 350 },
-      { lot: "Calangute", cars: 850 }, // High rush at beaches
-      { lot: "Mopa", cars: 550 },
-      { lot: "Anjuna", cars: 650 }, // Increased tourist traffic
-      { lot: "Porvorim", cars: 380 },
-      { lot: "Panaji", cars: 750 },
-      { lot: "Mapusa", cars: 600 },
-      { lot: "Dabolim", cars: 500 },
-      { lot: "Quepem", cars: 350 },
-      { lot: "Cacacona", cars: 400 },
-      { lot: "Colva", cars: 450 },
-      { lot: "Vasco", cars: 550 },
-      { lot: "Curchorem", cars: 300 },
-      { lot: "Margao", cars: 550 },
-    ],
-    Sunday: [
-      { lot: "Bicholim", cars: 300 },
-      { lot: "Calangute", cars: 900 }, // Peak tourist traffic
-      { lot: "Mopa", cars: 600 },
-      { lot: "Anjuna", cars: 800 },
-      { lot: "Porvorim", cars: 400 },
-      { lot: "Panaji", cars: 850 },
-      { lot: "Mapusa", cars: 700 },
-      { lot: "Dabolim", cars: 650 },
-      { lot: "Quepem", cars: 400 },
-      { lot: "Cacacona", cars: 500 },
-      { lot: "Colva", cars: 600 },
-      { lot: "Vasco", cars: 650 },
-      { lot: "Curchorem", cars: 350 },
-      { lot: "Margao", cars: 650 },
+  const [location,setLocation]=useState();
+
+  // const daysOfWeek = Object.keys(parkingData);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState('');
+
+  
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/location', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ location }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setData(result[0]); 
+        console.log(result) // Assuming the response is an array and we want the first element
+        setError('');
+      } else {
+        const errMessage = await response.json();
+        setError(errMessage.message || 'Something went wrong');
+        setData(null);
+      }
+    } catch (error) {
+      setError('Failed to fetch data');
+      setData(null);
+    }
+  };
+
+  const chartData = data && {
+    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    datasets: [
+      {
+        label: `Average Traffic for ${location}`,
+        data: [
+          data.monPerEntry,
+          data.tuePerEntry,
+          data.wedPerEntry,
+          data.thuPerEntry,
+          data.friPerEntry,
+          data.satPerEntry,
+          data.sunPerEntry
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(75, 192, 192, 0.6)',
+          'rgba(153, 102, 255, 0.6)',
+          'rgba(255, 159, 64, 0.6)',
+          'rgba(199, 199, 199, 0.6)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(199, 199, 199, 1)',
+        ],
+        borderWidth: 1,
+      },
     ],
   };
-  
 
-
-  const daysOfWeek = Object.keys(parkingData);
+  const handleSubmit = (e) => {
+    console.log(location)
+    e.preventDefault();
+    if (location) {
+      fetchData();
+    } else {
+      setError('Location is required');
+    }
+  };
 
   return (
     <div className='px-4 py-6 md:px-8 md:py-12 height:100vh'>
       <Header/>
-      <h1>Parking Lot Data - Weekly Overview</h1>
+      <Flex direction={'column'}>
+        <Heading>
+          Choose Location, to get the weekly Trends
+        </Heading>
+        <div className='dropdown-container'>
+    <Select variant='filled' placeholder='Enter Location' width={'60vw'} onChange={(e)=>{setLocation(e.target.value)}} >
+          <option className='option' value={'Panaji'}>
+            Panjim
+          </option>
+          <option className='option' value={'Porvorim'}>
+            Panjim
+          </option>
+          <option className='option' value={'Vasco'}>
+            Vasco
+          </option>
+        </Select>
+
+        <Button width={'60vw'} onClick={handleSubmit}>
+          Get Data
+        </Button>
+        </div>
+        
+      </Flex>
+      {/* <h1>Parking Lot Data - Weekly Overview</h1>
       {daysOfWeek.map((day) => (
         <div key={day}>
           <h2>{day}</h2>
           <ParkingGraph data={parkingData[day]} day={day} />
         </div>
-      ))}
+      ))} */}
+       {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      {data && (
+        <div>
+          <h2>Traffic Data for {location}</h2>
+          <Bar data={chartData}  />
+        </div>
+      )}
+
+      
     </div>
   );
 };

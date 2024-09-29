@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../Normal';
 import axios from 'axios';
+import "../App.css"
 import { Button, Flex, Heading, Select } from '@chakra-ui/react';
 import {
   Table,
@@ -46,7 +47,7 @@ function Pol ()  {
     <Flex>
      <Select placeholder='Enter Day' onChange={(e)=>{useDay(e.target.value)}} flex="0.7" marginLeft="10px" marginBottom={"30px"} marginTop={"10px"}>
     <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
+        <option value="Tuesday" className='option'>Tuesday</option>
         <option value="Wednesday">Wednesday</option>
         <option value="Thursday">Thursday</option>
         <option value="Friday">Friday</option>
