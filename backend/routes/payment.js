@@ -12,6 +12,8 @@ const router = express.Router();
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 router.post("/orders", async (req, res) => {
+    console.log(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
     try {
         const instance = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
